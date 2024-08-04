@@ -10,17 +10,15 @@ import helper
 try:
     options = FirefoxOptions()
     options.add_argument("--headless")
-    driver = webdriver.Firefox(options=options)
+    driver = webdriver.Firefox(options = options)
     while(1==1):
         driver.get("https://theamericapac.org/voter-registration/")
-        # time.sleep(2)
         year = helper.get_random_year()
         name = helper.get_name()
         surname = helper.get_surname()
         email = helper.get_email(name,surname,year)
         address = helper.get_address()
         phone = helper.get_phone(address)
-
 
 
         iframe = WebDriverWait(driver, 10).until(
@@ -39,7 +37,14 @@ try:
         zipcode_input.send_keys(address['postalCode'])
 
         button = driver.find_element(By.CLASS_NAME, "formbold-btn")
-        button.click()
+
+        zipcode_input.click() #the site is so buggy i have to click twice to remove popup
+        button.click() # because it briefly reappers after going away and mess with button clicking
+
+        button = driver.find_element(By.CLASS_NAME, "formbold-btn")
+        button.click() # finally we can proceed to next page of the form :)
+
+
 
         name_input = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.ID, "firstname"))
