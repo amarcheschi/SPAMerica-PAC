@@ -8,10 +8,10 @@ from selenium.webdriver.common.keys import Keys
 import helper
 
 try:
+    options = FirefoxOptions()
+    options.add_argument("--headless")
+    driver = webdriver.Firefox(options=options)
     while(1==1):
-        options = FirefoxOptions()
-        options.add_argument("--headless")
-        driver = webdriver.Firefox(options=options)
         driver.get("https://theamericapac.org/voter-registration/")
         # time.sleep(2)
         year = helper.get_random_year()
@@ -98,7 +98,5 @@ try:
 
         button = driver.find_element(By.CLASS_NAME, "formbold-btn")
         button.click()
-        driver.close()
 finally:
     driver.quit()
-    print("dasfwer")
